@@ -1,8 +1,4 @@
 # Dependências
 node_modules/
 
-# Builds
-dist/
-
-
 .env

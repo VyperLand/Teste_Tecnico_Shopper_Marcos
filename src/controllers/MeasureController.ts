@@ -39,7 +39,7 @@ export class MeasureController{
                 const nameImage: string = body.customer_code + "-" + body.measure_type  + "-" + body.measure_datetime.substr(0,10) + "medicao." + (imageBase64Valid.mimeType || ".png");
                 
                 
-                measure_value = await geminiServices.uploadImage_Get_Output(imageBase64,nameImage);
+                measure_value = await geminiServices.uploadImage_Get_Output(imageBase64,nameImage,(imageBase64Valid.mimeType || ".png"));
 
                 const imageUrl = `${req.protocol}://${req.get('host')}/images/${nameImage}`;
 
@@ -74,10 +74,6 @@ export class MeasureController{
 
                     measure.measure_value = body.confirmed_value;
                     measure.measure_confirmed = true;
-
-                    // if(await measureServices.updateMeasureById({measure_value: body.confirmed_value, measure_confirmed: true},measure.id)){
-
-                    // }
 
                     const responseSave = await measure.save();
                     
@@ -118,8 +114,6 @@ export class MeasureController{
             }
             
             const measures = await measureServices.getByFilter_Customer_Code(filter);
-
-            console.log(measures);
 
             res.status(200).send(measures);
         } catch (error) {

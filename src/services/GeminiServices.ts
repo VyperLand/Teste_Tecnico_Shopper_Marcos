@@ -17,14 +17,14 @@ export class GeminiServices{
         
     }
 
-    async uploadImage_Get_Output(imageBase64: string, imageName: string): Promise<number>{
+    async uploadImage_Get_Output(imageBase64: string, imageName: string,mimeType:string): Promise<number>{
 
         try {
 
             const filePath:string =  await Utils.convertBase64ToImage(imageBase64,imageName);
 
             const uploadResponse = await fileManager.uploadFile(filePath,{
-                mimeType: "image/png",
+                mimeType: "image/"+mimeType,
                 displayName: imageName
             });
             
